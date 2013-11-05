@@ -35,33 +35,12 @@ def user_photos():
 		return redirect('/connect')
 
 
-@app.route('/json')
-def json():
-	
-	if 'instagram_access_token' in session and 'instagram_user' in session:
-		userAPI = InstagramAPI(access_token=session['instagram_access_token'])
-		recent_media, next = userAPI.user_recent_media(user_id=session['instagram_user'].get('id'),count=25)
-
-		photos = []
-		for media in recent_media:
-			# photos.append(media.get_standard_resolution_url())  # big photo
-			photos.append(media.images['thumbnail'].url) #thumbnails
-
-
-		return jsonify({
-			'status' : 'OK',
-			'media' : photos,
-			
-		})
-
-	else:
-		return redirect('/connect')
-
 @app.route('/connect')
 def main():
 
 	url = api.get_authorize_url(scope=["likes","comments"])
 	return redirect(url)
+
 
 @app.route('/instagram_callback')
 def instagram_callback():
@@ -83,27 +62,6 @@ def instagram_callback():
 		
 	else:
 		return "Uhoh no code provided"
-
-
-
-
-
-@app.route('/search')
-def itp_tweets():
-
-	# get search term from querystring 'q'
-	query = request.args.get('q','#redburns')
-
-	# search with query term and return 10
-	results = twitter.search.tweets(q=query, count=50)
-	
-	templateData = {
-		'query' : query,
-		'tweets' : results.get('statuses')
-	}
-
-	return render_template('search.html', **templateData)
-
 
 
 	
