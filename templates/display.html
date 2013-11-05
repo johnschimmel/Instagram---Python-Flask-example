@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-12">
+
+		
+		{% if size == 'big'%}
+		<a href="/">View thumbnails</a>
+		{% else %} 
+		<a href="/?size=big">View large photos</a>
+		{% endif %}
+
+		<hr>
+
+
+		{% for m in media %}
+			
+			{% if size == 'big'%}
+			<p>
+				<img src="{{m.images['standard_resolution'].url}}" alt="{{m.caption.text}}">
+				<br>
+				{{m.caption.text}}
+				<br>
+				<small><a href="{{m.link}}">view on instagram</a></small>
+			</p>
+
+			{% else %}
+
+				<div class="col-sm-6 col-md-2">
+					<a href="{{m.link}}" class="thumbnail">
+						<img src="{{m.images['thumbnail'].url}}" alt="{{m.caption.text}}">
+					</a>
+				</div>
+			{% endif %}
+
+		{% endfor %}
+	</div>
+	
+
+</div>
+
+{% endblock %}
