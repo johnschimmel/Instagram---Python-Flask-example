@@ -1,5 +1,7 @@
 ## Instagram API Flask example
 
+Using the wonderful [Python-Instagram library](https://github.com/Instagram/python-instagram)
+
 ### Requirements
 
 * Python 2.7.x

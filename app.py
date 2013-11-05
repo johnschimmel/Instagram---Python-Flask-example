@@ -18,7 +18,7 @@ api = InstagramAPI(**instaConfig)
 @app.route('/')
 def user_photos():
 
-
+	# if instagram info is in session variables, then display user photos
 	if 'instagram_access_token' in session and 'instagram_user' in session:
 		userAPI = InstagramAPI(access_token=session['instagram_access_token'])
 		recent_media, next = userAPI.user_recent_media(user_id=session['instagram_user'].get('id'),count=25)
@@ -32,16 +32,17 @@ def user_photos():
 		
 
 	else:
+
 		return redirect('/connect')
 
-
+# Redirect users to Instagram for login
 @app.route('/connect')
 def main():
 
 	url = api.get_authorize_url(scope=["likes","comments"])
 	return redirect(url)
 
-
+# Instagram will redirect users back to this route after successfully logging in
 @app.route('/instagram_callback')
 def instagram_callback():
 
@@ -55,6 +56,8 @@ def instagram_callback():
 
 		app.logger.debug('got an access token')
 		app.logger.debug(access_token)
+
+		# Sessions are used to keep this data 
 		session['instagram_access_token'] = access_token
 		session['instagram_user'] = user
 
