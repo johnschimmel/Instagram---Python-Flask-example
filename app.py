@@ -7,7 +7,7 @@ app = Flask(__name__)   # create our flask app
 app.secret_key = os.environ.get('SECRET_KEY')
 
 
-# configure Twitter API
+# configure Instagram API
 instaConfig = {
 	'client_id':os.environ.get('CLIENT_ID'),
 	'client_secret':os.environ.get('CLIENT_SECRET'),
@@ -76,7 +76,7 @@ def page_not_found(error):
 # This is a jinja custom filter
 @app.template_filter('strftime')
 def _jinja2_filter_datetime(date, fmt=None):
-    pyDate = time.strptime(date,'%a %b %d %H:%M:%S +0000 %Y') # convert twitter date string into python date/time
+    pyDate = time.strptime(date,'%a %b %d %H:%M:%S +0000 %Y') # convert instagram date string into python date/time
     return time.strftime('%Y-%m-%d %h:%M:%S', pyDate) # return the formatted date.
     
 # --------- Server On ----------
